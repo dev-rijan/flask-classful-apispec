@@ -1,0 +1,4 @@
+env/
+venv/
+*.egg-info
+pyvenv.cfg
