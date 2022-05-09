@@ -5,11 +5,8 @@ A pluggable API specification generator generator for `Flask classful <https://g
 
 Features
 ========
-
-- Supports the OpenAPI Specification (versions 2 and 3)
-- Framework-agnostic
-- Built-in support for `marshmallow <https://marshmallow.readthedocs.io/>`_
-- Utilities for parsing docstrings
+- Utilities for parsing flask classful docstrings
+- Support for `marshmallow <https://marshmallow.readthedocs.io/>`_
 
 Installation
 ============
@@ -18,3 +15,6 @@ Installation
 
     $ pip install flask-classful-apispec
 
+Usauage
+===================
+TODO
