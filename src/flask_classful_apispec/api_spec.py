@@ -18,7 +18,7 @@ class APISpec(BaseAPISpec):
         self.version = app.config['DOC_VERSION']
         self.openapi_version = OpenAPIVersion(app.config['DOC_OPEN_API_VERSION'])
         self.options = options
-        self.plugins = (MarshmallowPlugin, FlaskClassfulPlugin)
+        self.plugins = (MarshmallowPlugin(), FlaskClassfulPlugin())
 
         # Metadata
         self._tags = []
@@ -31,10 +31,10 @@ class APISpec(BaseAPISpec):
         for plugin in self.plugins:
             plugin.init_spec(self)
 
-    def paths(self, view, app):
+    def paths(self, view, app, operations=None):
         members = get_interesting_members(FlaskView, view)
         operations = deepcopy(operations) or OrderedDict()
         operations.update(yaml_utils.load_operations_from_docstring(view.__doc__))
 
         for member in members:
-            self.path(operations=operations, view=member)
+            self.path(operations=operations, view=view, view_member=member)
