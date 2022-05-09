@@ -1,8 +1,11 @@
-from apispec import APISpec as BaseAPISpec
+from copy import deepcopy
+from apispec import APISpec as BaseAPISpec, yaml_utils
 from apispec.core import Components
 from apispec.utils import OpenAPIVersion
 from collections import OrderedDict
+from apispec.ext.marshmallow import MarshmallowPlugin
 from flask_classful import FlaskView, get_interesting_members
+from flask_classful_apispec.flask_classful_plugin import FlaskClassfulPlugin
 
 
 class APISpec(BaseAPISpec):
@@ -10,12 +13,12 @@ class APISpec(BaseAPISpec):
         if app is not None:
             self.init_app(app, plugins=plugins, **options)
 
-    def init_app(self, app, plugins=(), **options):
+    def init_app(self, app, **options):
         self.title = app.config['DOC_TITLE']
         self.version = app.config['DOC_VERSION']
         self.openapi_version = OpenAPIVersion(app.config['DOC_OPEN_API_VERSION'])
         self.options = options
-        self.plugins = plugins
+        self.plugins = (MarshmallowPlugin(), FlaskClassfulPlugin())
 
         # Metadata
         self._tags = []
@@ -28,31 +31,10 @@ class APISpec(BaseAPISpec):
         for plugin in self.plugins:
             plugin.init_spec(self)
 
-    def paths(self, view, app):
+    def paths(self, view, app, operations=None):
         members = get_interesting_members(FlaskView, view)
+        operations = deepcopy(operations) or OrderedDict()
+        operations.update(yaml_utils.load_operations_from_docstring(view.__doc__))
 
-        for name, value in members:
-            endpoint = view.build_route_name(name)
-
-            if hasattr(value, "_rule_cache") and name in value._rule_cache:
-                for idx, cached_rule in enumerate(value._rule_cache[name]):
-                    rule, options = cached_rule
-                    sub, ep, options = view.parse_options(options)
-                    endpoint = ep or endpoint
-                    print(app.url_map._rules_by_endpoint[endpoint])
-                    rule = app.url_map._rules_by_endpoint[endpoint][0]
-                    methods = options.get('methods', ['GET'])
-                    self.path(path=rule, methods=methods, fun=value)
-
-            elif name in view.special_methods:
-                methods = view.special_methods[name]
-                endpoint = view.build_route_name(name)
-                rule = app.url_map._rules_by_endpoint[endpoint][0]
-                self.path(path=rule, methods=methods, fun=value)
-            else:
-                methods = getattr(view, 'default_methods', ["GET"])
-                endpoint = view.build_route_name(name)
-                rule = app.url_map._rules_by_endpoint[endpoint][0]
-                self.path(path=rule, methods=methods, fun=value)
-
-
+        for member in members:
+            self.path(operations=operations, view=view, view_member=member)
