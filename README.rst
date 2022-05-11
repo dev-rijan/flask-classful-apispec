@@ -1,7 +1,7 @@
 Flask classful apispec
 ======================
 
-A pluggable API specification generator generator for `Flask classful <https://github.com/teracyhq/flask-classful>`_ based on `apispec <https://github.com/jmcarp/flask-apispec>`_
+A pluggable API specification generator generator for `Flask classful <https://flask-classful.teracy.org/>`_ based on `apispec <https://apispec.readthedocs.io/en/latest/>`_
 
 Features
 ========
@@ -107,4 +107,15 @@ Generated OpenAPI Spec
         }
       }
     }
+
+Documentation
+=============
+- For apispec see  `apispec <https://apispec.readthedocs.io/en/latest/>`_
+- For Flask Clasful view see  `Flask classful <https://flask-classful.teracy.org/>`_
+- For Schema see `marshmallow <https://marshmallow.readthedocs.io/>`_
+
+License
+=======
+
+MIT licensed. See the bundled `LICENSE <https://github.com/dev-rijan/flask-classful-apispec/blob/master/LICENSE>`_ file for more details.
 
