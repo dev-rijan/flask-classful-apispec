@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = "0.1.7"
+VERSION = "0.1.8"
 EXTRAS_REQUIRE = {
     "tests": ["pytest", "mock"],
     "lint": ["flake8==3.9.2", "flake8-bugbear==21.4.3"],
@@ -25,7 +25,7 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     include_package_data=True,
-    install_requires=["apispec==5.1.1", "flask-classful==0.14.2"],
+    install_requires=["apispec[yaml]>=5.1.1", "flask-classful==0.14.2"],
     python_requires=">=3.6",
     extras_require=EXTRAS_REQUIRE,
     license="MIT",
