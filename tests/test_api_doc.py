@@ -5,7 +5,7 @@ from .views import PetView
 class TestPathHelpers:
     def test_class_view(self, app, spec):
         PetView.register(app, trailing_slash=False)
-        spec.paths(PetView, app)
+        spec.paths(PetView)
         paths = get_paths(spec)
 
         assert "get" in paths["/pet"]

@@ -25,7 +25,7 @@ Usage
     from flask_classful import FlaskView
     from flask_classful_apispec import APISpec
     from marshmallow import Schema, fields
-    
+
     app = Flask(__name__)
 
     app.config["DOC_TITLE"] = "Swagger petstore"
@@ -56,16 +56,15 @@ Usage
             return PetSchema(many=True).dumps(pets)
 
     PetView.register(app)
+    spec.paths(PetView)
 
-    with app.test_request_context():
-    spec.paths(PetView, app)
     print(json.dumps(spec.to_dict(), indent=2))
 
     if __name__ == "__main__":
         app.run()
 
 Generated OpenAPI Spec
-======
+=====================
 .. code-block:: json
 
     {

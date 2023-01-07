@@ -1,6 +1,5 @@
 import re
 from typing import Callable, Dict, List, Type, Tuple
-from flask import current_app
 from apispec import BasePlugin, yaml_utils
 from flask_classful import FlaskView
 
@@ -21,10 +20,8 @@ class FlaskClassfulPlugin(BasePlugin):
 
         return RE_URL.sub(r"{\1}", path)
 
-    def path_helper(self, operations: Dict, *, view: Type[FlaskView], view_member: Tuple, app=None, **kwargs) -> str:
+    def path_helper(self, operations: Dict, *, view: Type[FlaskView], view_member: Tuple, app, **kwargs) -> str:
         """Path helper that allows parsing a Flask classful method."""
-        if app is None:
-            app = current_app
         name, value = view_member
         endpoint = view.build_route_name(name)
 
