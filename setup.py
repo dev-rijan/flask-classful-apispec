@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = "0.1.8"
+VERSION = "0.1.9"
 EXTRAS_REQUIRE = {
     # [FIXME] latest version of flask is mot supported by flask classful, so added as test dependencies
     "tests": ["pytest", "mock", "marshmallow", "flask==2.1.2", "Werkzeug==2.1.2"],
@@ -20,6 +20,7 @@ setup(
     version=VERSION,
     description="Auto docs generation from marshmallow schema for flask classfy",
     long_description=read("README.rst"),
+    long_description_content_type="text/markdown",
     author="Rijan adhikari",
     author_email="rijanadhikari@gmail.com",
     url="https://github.com/dev-rijan/flask-classful-apispec",
