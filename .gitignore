@@ -2,3 +2,6 @@ env/
 venv/
 *.egg-info
 pyvenv.cfg
+__pycache__
+.pytest_cache
+.tox/

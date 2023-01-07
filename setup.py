@@ -2,7 +2,8 @@ from setuptools import setup, find_packages
 
 VERSION = "0.1.8"
 EXTRAS_REQUIRE = {
-    "tests": ["pytest", "mock"],
+    # [FIXME] latest version of flask is mot supported by flask classful, so added as test dependencies
+    "tests": ["pytest", "mock", "marshmallow", "flask==2.1.2", "Werkzeug==2.1.2"],
     "lint": ["flake8==3.9.2", "flake8-bugbear==21.4.3"],
 }
 EXTRAS_REQUIRE["dev"] = EXTRAS_REQUIRE["tests"] + EXTRAS_REQUIRE["lint"] + ["tox"]
@@ -25,7 +26,7 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     include_package_data=True,
-    install_requires=["apispec[yaml]>=5.1.1", "flask-classful==0.14.2"],
+    install_requires=["apispec[yaml] >= 5.1.1", "flask-classful == 0.14.2", "packaging >= 21.3"],
     python_requires=">=3.6",
     extras_require=EXTRAS_REQUIRE,
     license="MIT",

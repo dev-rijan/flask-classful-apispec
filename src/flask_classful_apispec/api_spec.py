@@ -1,7 +1,7 @@
 from copy import deepcopy
+from packaging.version import Version
 from apispec import APISpec as BaseAPISpec, yaml_utils
 from apispec.core import Components
-from apispec.utils import OpenAPIVersion
 from collections import OrderedDict
 from apispec.ext.marshmallow import MarshmallowPlugin
 from flask_classful import FlaskView, get_interesting_members
@@ -16,7 +16,7 @@ class APISpec(BaseAPISpec):
     def init_app(self, app, **options):
         self.title = app.config['DOC_TITLE']
         self.version = app.config['DOC_VERSION']
-        self.openapi_version = OpenAPIVersion(app.config['DOC_OPEN_API_VERSION'])
+        self.openapi_version = Version(app.config['DOC_OPEN_API_VERSION'])
         self.options = options
         self.plugins = (MarshmallowPlugin(), FlaskClassfulPlugin())
 
