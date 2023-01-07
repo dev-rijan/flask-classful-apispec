@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = "0.1.9"
+VERSION = "0.2.0"
 EXTRAS_REQUIRE = {
     # [FIXME] latest version of flask is mot supported by flask classful, so added as test dependencies
     "tests": ["pytest", "mock", "marshmallow", "flask==2.1.2", "Werkzeug==2.1.2"],

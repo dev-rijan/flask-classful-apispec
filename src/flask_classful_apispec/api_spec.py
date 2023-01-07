@@ -14,6 +14,7 @@ class APISpec(BaseAPISpec):
             self.init_app(app, plugins=plugins, **options)
 
     def init_app(self, app, **options):
+        self.app = app
         self.title = app.config['DOC_TITLE']
         self.version = app.config['DOC_VERSION']
         self.openapi_version = Version(app.config['DOC_OPEN_API_VERSION'])
@@ -31,10 +32,10 @@ class APISpec(BaseAPISpec):
         for plugin in self.plugins:
             plugin.init_spec(self)
 
-    def paths(self, view, app, operations=None):
+    def paths(self, view, operations=None):
         members = get_interesting_members(FlaskView, view)
         operations = deepcopy(operations) or OrderedDict()
         operations.update(yaml_utils.load_operations_from_docstring(view.__doc__))
 
         for member in members:
-            self.path(operations=operations, view=view, view_member=member)
+            self.path(operations=operations, view=view, view_member=member, app=self.app)
