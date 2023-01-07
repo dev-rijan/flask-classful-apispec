@@ -25,7 +25,7 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     include_package_data=True,
-    install_requires=["apispec[yaml]>=5.1.1", "flask-classful==0.14.2"],
+    install_requires=["apispec[yaml]>=5.1.1", "marshmallow==3.19.0", "flask-classful==0.14.2"],
     python_requires=">=3.6",
     extras_require=EXTRAS_REQUIRE,
     license="MIT",
